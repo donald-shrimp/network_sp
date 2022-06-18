@@ -11,7 +11,7 @@ int main(void){
     server.sin_addr.s_addr = inet_addr("133.43.7.130");
     connect(sock, (struct sockaddr *)&server, sizeof(server));
 
-    char  get[32],filename[16];
+    char  get[64],filename[32];
     printf("filename:");
     scanf("%s",filename);
     sprintf(get,"GET /%s HTTP/1.0",filename);
@@ -22,26 +22,32 @@ int main(void){
     get[len + 3] = 0x0a;
     write(sock, get, len + 4);
 
-    char buff[1024] = {0},cpbuff[1024];
-    int n = read(sock, buff, sizeof(buff));
-    strcpy(cpbuff,buff);
-    char* status = strtok(cpbuff," ");
+    char buff[1024] = {0};
+    int n = read(sock, buff, sizeof(buff)-1);
+    char* status = strtok(buff," ");
     status = strtok(NULL," ");
     if (strcmp(status,"200")!=0){
         printf("status:%s\n",status);
         return 1;
     }
 
-    char delim[4]={0x0d,0x0a,0x0d,0x0a};
-    char* html = strtok(buff,delim);
-    html = strtok(NULL,delim);
+    //パワーで解決しました(なんの参考にもならない)
+    char delim[4]={0x0d,0x0a};
+    char* html = strtok(NULL,delim);
+    
+
+    for (int i = 0; i < 9; i++){
+        html = strtok(NULL,delim);
+    }
+    // char* str;
+    // while (strcmp(str,"\n\n")!=0){
+    //     html = strtok(NULL,delim);
+    //     str = strstr(html,delim);
+    // }
+
+    html = strtok(NULL,"\0");
     printf("%s", html);
-    printf("\n-------------------------\n");
-    // html = strtok(NULL,"\n");
-    // printf("%s", html);
-    // printf("\n-------------------------\n");
-    // printf("%s", buff);
-    // printf("\n-------------------------\n");
+   
     while (n > 0){
         memset(buff, 0, sizeof(buff));
         n = read(sock, buff, sizeof(buff));

@@ -11,7 +11,7 @@ int main(void){
     server.sin_addr.s_addr = inet_addr("133.43.7.130");
     connect(sock, (struct sockaddr *)&server, sizeof(server));
 
-    char  get[32],filename[16];
+    char  get[64],filename[32];
     printf("filename:");
     scanf("%s",filename);
     sprintf(get,"GET /%s HTTP/1.0",filename);

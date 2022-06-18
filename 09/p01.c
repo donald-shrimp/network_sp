@@ -18,9 +18,9 @@ int main(){
             data.text[i]='\0';
         }        
     }
-    data.num=*(int*)(buff+data.string_byte);
-    data.score1=*(buff+data.string_byte+1);
-    data.score2=*(short*)(buff+data.string_byte+2);
+    data.num=*(int*)(buff+data.string_byte+1);
+    data.score1=*(buff+data.string_byte+5);
+    data.score2=*(short*)(buff+data.string_byte+6);
 
     printf("文字列のバイト数:%d,文字列:%s,整数:%d,整数:%d,整数:%d\n",data.string_byte,data.text,data.num,data.score1,data.score2);
 }
