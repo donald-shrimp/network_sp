@@ -41,21 +41,21 @@ int main(){
     char *req = strtok(buff, " ");
     req = strtok(NULL, " ");
     printf("%s",req);
-    char* body;
+    char* file;
     if (strcmp(req, "/") == 0){ // index
         okreq(sock,req);
         int fd = fopen("hello.html",r);
-        fread(file,sizeof(char),1024,fd)
+        fread(file,sizeof(char),1024,fd);
         write(sock, file, strlen(body));
     }else if (strcmp(req, "/wd") == 0){
         okreq(sock,req);
         int fd = fopen("world.html",r);
-        fread(file,sizeof(char),1024,fd)
+        fread(file,sizeof(char),1024,fd);
         write(sock, file, strlen(body));
     }else{
         okreq(sock,req);
         int fd = fopen("404.html",r);
-        fread(file,sizeof(char),1024,fd)
+        fread(file,sizeof(char),1024,fd);
         write(sock, file, strlen(body));
     }
 
