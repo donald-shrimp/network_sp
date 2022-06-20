@@ -3,6 +3,10 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <string.h>
+#include <iostream>
+#include <string>
+using namespace std;
+
 int main(void){
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     struct sockaddr_in server;
@@ -24,30 +28,18 @@ int main(void){
 
     char buff[1024] = {0};
     int n = read(sock, buff, sizeof(buff)-1);
+    string tmp = string(buff);
     char* status = strtok(buff," ");
     status = strtok(NULL," ");
+
     if (strcmp(status,"200")!=0){
         printf("status:%s\n",status);
         return 1;
     }
-
-    //パワーで解決しました(なんの参考にもならない)
-    char delim[4]={0x0d,0x0a};
-    char* html = strtok(NULL,delim);
     
+    // char delim[4]={0x0d,0x0a,0x0d,0x0a};    
+    cout << tmp.substr(tmp.find("\r\n\r\n")) << endl;
 
-    for (int i = 0; i < 9; i++){
-        html = strtok(NULL,delim);
-    }
-    // char* str;
-    // while (strcmp(str,"\n\n")!=0){
-    //     html = strtok(NULL,delim);
-    //     str = strstr(html,delim);
-    // }
-
-    html = strtok(NULL,"\0");
-    printf("%s", html);
-   
     while (n > 0){
         memset(buff, 0, sizeof(buff));
         n = read(sock, buff, sizeof(buff));
