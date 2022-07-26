@@ -35,13 +35,11 @@ if(files.back().name == "msg"){
     }
 }
 } });
-    std::thread th([&]()
-                   { svr.listen("localhost", port); });
+    std::thread th([&](){ svr.listen("localhost", port); });
     char http[128];
     sprintf(http, "http://localhost:%d", port); // 接続情報の文字列の生成
     httplib::Client cli(http);
-    while (1)
-    {
+    while (1){
         std::cout << "Remoete URI:";
         char RemoteURI[128];
         scanf("%s", RemoteURI);
@@ -57,9 +55,7 @@ if(files.back().name == "msg"){
         scanf("%s", content);
         //データ本体の指定
 
-        httplib::MultipartFormDataItems items = {
-            {name, content, name, "text/plain"}
-            // scanfで取り込んだデータを指定
+        httplib::MultipartFormDataItems items = {{name, content, name, "text/plain"}// scanfで取り込んだデータを指定
         };
         httplib::Client cli(RemoteURI);
         // 接続先をscanfで取り込んだ情報に指定
