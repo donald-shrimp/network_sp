@@ -1,5 +1,8 @@
 #include "httplib.h"
 #include <stdlib.h>
+#include <set>
+#include <iostream>
+
 int main(int argc, char **argv){
     int port = 1234;
     if (argc >= 2){ // コマンドライン引数によるポート番号の指定
